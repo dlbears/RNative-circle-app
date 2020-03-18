@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/stephonlawrence/circle-app/issues"
   },
-  "homepage": "https://github.com/stephonlawrence/circle-app#readme"
+  "homepage": "https://github.com/stephonlawrence/circle-app#readme",
+  "devDependencies": {
+    "lerna": "^3.20.2"
+  }
 }
