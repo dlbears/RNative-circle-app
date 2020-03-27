@@ -1,0 +1,26 @@
+{
+  "name": "globals",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "Dennis Orsini <dennisorsini97@gmail.com>",
+  "homepage": "https://github.com/stephonlawrence/circle-app/tree/master/packages/globals#readme",
+  "license": "ISC",
+  "main": "lib/globals.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stephonlawrence/circle-app.git"
+  },
+  "scripts": {
+    "test": "echo \"[globals.js] Empty, Skipping\""
+  },
+  "bugs": {
+    "url": "https://github.com/stephonlawrence/circle-app/issues"
+  }
+}
