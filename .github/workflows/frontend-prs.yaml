@@ -5,14 +5,11 @@ on:
     branches:
       - master
 jobs:
-  build:
-
+  bootstrap:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [12.x]
-
     steps:
     - uses: actions/checkout@v1
     - name: Use Node.js ${{ matrix.node-version }}
@@ -20,33 +17,41 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm install -g yarn lerna ultra-runner npm@latest
-    - name: Yarn install, bootstrap, test and build
-    - uses: expo/expo-github-action@v5
-      with:
-        expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
-        expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
+    - name: Yarn install & bootstrap deps
       run: |
+        npm install -g yarn lerna ultra-runner npm@latest && 
         yarn install &&
-        yarn bootstrap:production &&
-        yarn ci:front:pr
-    - name: Create Release Candidate
-      id: create_release
-      uses: actions/create-release@latest
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-      with:
-        tag_name: rc,${{ github.ref }}
-        release_name: RC ${{ github.ref }}
-        body: |
-          Changelog:
-        draft: false
-        prerelease: true
-    - name: Upload Release Asset
-      id: upload-release-asset 
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./src/frontend/main/native-build/circle-signed.apk
-        asset_name: circle-signed.apk
+        yarn bootstrap:production
+  tryrelease:
+      needs: bootstrap
+      runs-on: ubuntu-latest
+      strategy:
+        matrix:
+          node-version: [12.x]
+      steps:
+        - uses: expo/expo-github-action@v5
+          with:
+            expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
+            expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
+        - run: yarn ci:front:pr
+        - name: Create Release Candidate
+          id: create_release
+          uses: actions/create-release@latest
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+          with:
+            tag_name: rc,${{ github.ref }}
+            release_name: RC ${{ github.ref }}
+            body: |
+              Changelog:
+            draft: false
+            prerelease: true
+        - name: Upload Release Asset
+          id: upload-release-asset 
+          uses: actions/upload-release-asset@v1
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          with:
+            upload_url: ${{ steps.create_release.outputs.upload_url }}
+            asset_path: ./src/frontend/main/native-build/circle-signed.apk
+            asset_name: circle-signed.apk
