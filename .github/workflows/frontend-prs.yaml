@@ -23,7 +23,8 @@ jobs:
     - run: npm install -g yarn lerna ultra-runner npm@latest
     - name: Yarn install, bootstrap test and build
       run: |
-        npm install -g yarn lerna ultra-runner npm@latest && 
+        npm install -g yarn lerna ultra-runner npm@latest &&
+        yarn clean:all && 
         yarn install &&
         yarn bootstrap:production &&
         yarn ci:front:pr
