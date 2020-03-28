@@ -3,6 +3,7 @@ name: Integrate frontend changes
 on: 
   push:
     paths:
+      - '*'
       - '!src/backend/*'
 jobs:
   publish:
