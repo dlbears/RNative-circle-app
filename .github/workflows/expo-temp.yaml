@@ -15,9 +15,30 @@ jobs:
           expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
       - run: npm install -g npm@latest yarn lerna && yarn install && yarn bootstrap
-      - run: cd ./src/frontend/main && expo publish --release-channel=pr-${{ github.event.number }}
+      - run: cd ./src/frontend/main && expo publish --release-channel=pr-${{ github.event.number }} && yarn run postbuild
       - uses: unsplash/comment-on-pr@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           msg: App is ready for review, you can [see it here](https://expo.io/@dlbears/use-expo?release-channel=pr-${{ github.event.number }}).
+      - name: Create Release Candidate
+        id: create_release
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: rc,${{ github.ref }}
+          release_name: RC ${{ github.ref }}
+          body: |
+            Development apk Builds
+          draft: false
+          prerelease: true
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./src/frontend/main/native-build/circle-signed.apk
+          asset_name: circle-signed.apk
