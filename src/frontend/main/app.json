@@ -2,16 +2,24 @@
   "name": "main",
   "displayName": "main",
   "expo": {
-    "name": "main",
-    "slug": "main",
+    "name": "Circle",
+    "slug": "circle",
+    "icon": "./assets/images/blankicon.png",
     "privacy": "unlisted",
+    "assetBundlePatterns": [
+      "assets/images/*"
+    ],
     "sdkVersion": "36.0.0",
-    "version": "1.0.0",
+    "version": "0.0.0",
     "entryPoint": "node_modules/expo/AppEntry.js",
     "platforms": [
       "ios",
       "android",
       "web"
-    ]
+    ],
+    "android": {
+      "package": "com.circle.main",
+      "versionCode": 1
+    }
   }
 }

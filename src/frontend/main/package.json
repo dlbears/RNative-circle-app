@@ -4,7 +4,21 @@
     "ios": "react-native run-ios",
     "web": "expo start --web",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest --coverage --detectOpenHandles --passWithNoTests --forceExit",
+    "test:ci": "jest --ci --coverage --detectOpenHandles --passWithNoTests --forceExit & expo build:web",
+    "build:web": "expo build:web",
+    "build:android": "expo build:android",
+    "build:ios": "expo build:ios",
+    "build:native": "yarn build:android && yarn build:ios",
+    "build:all": "yarn build:web && yarn build:native",
+    "build:webdroid": "yarn build:web && yarn build:android",
+    "build:webios": "yarn build:web && yarn build:ios",
+    "build:ci": "yarn build:webdroid",
+    "build": "yarn build:webdroid",
+    "dev:native": "cosmos-native & react-devtools",
+    "dev:web": "cosmos & react-devtools",
+    "dev": "cosmos --external-userdeps & react-devtools",
+    "clean": "rm -rf ./web-build & rm -rf ./.expo/web/cache & rm -rf ./native-build"
   },
   "dependencies": {
     "expo": "~36.0.0",
@@ -15,20 +29,30 @@
     "react-native-reanimated": "~1.4.0",
     "react-native-screens": "2.0.0-alpha.12",
     "react-native-unimodules": "~0.7.0",
-    "react-native-web": "~0.11.7"
+    "react-native-web": "~0.11.7",
+    "sharp-cli": "^1.13.1",
+    "react-cosmos": "^5.1.0",
+    "ultra-runner": "^3.1.0"
   },
   "devDependencies": {
     "@babel/core": "~7.6.0",
+    "@expo/webpack-config": "^0.11.9",
     "@types/jest": "^25.1.4",
     "@types/react": "~16.9.0",
     "@types/react-native": "~0.60.23",
     "babel-loader": "^8.0.6",
     "babel-preset-expo": "~8.0.0",
     "jest-expo": "~36.0.1",
-    "typescript": "~3.6.3"
+    "react-devtools": "^4.5.0",
+    "typescript": "~3.6.3",
+    "webpack": "^4.42.1"
   },
   "jest": {
     "preset": "react-native"
   },
-  "private": true
+  "private": true,
+  "name": "circle-frontend",
+  "version": "0.0.0",
+  "homepage": "http://evanbacon.github.io/expo-gh-pages",
+  "description": "Native and Web repo"
 }

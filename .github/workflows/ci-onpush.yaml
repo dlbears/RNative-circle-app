@@ -1,0 +1,28 @@
+name: Integrate frontend changes 
+
+on: [push]
+jobs:
+  publish:
+    name: Install and Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - uses: expo/expo-github-action@v5
+        with:
+          expo-version: 3.x
+          expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
+          expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
+      - run: npm install -g npm@latest yarn lerna ultra-runner && yarn install && yarn bootstrap
+      - run: ultra -r test:ci
+      - uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./src/frontend/main/coverage/clover.xml
+          flags: ui,unittests
+          name: codecov-circle
+
+    env:
+      CI: true
