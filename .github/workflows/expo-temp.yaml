@@ -27,10 +27,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
-          tag_name: rc,${{ github.ref }}
-          release_name: RC ${{ github.ref }}
-          body: |
-            Development apk Builds
+          tag_name: rc-${{ github.ref }}
+          release_name: Release Candidate ${{ github.ref }}
+          body: Development apk Builds
           draft: false
           prerelease: true
       - name: Upload Release Asset
