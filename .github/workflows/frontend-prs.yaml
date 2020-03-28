@@ -22,10 +22,13 @@ jobs:
         expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
     - run: npm install -g yarn lerna ultra-runner npm@latest
     - name: Yarn install, bootstrap test and build
+      env: 
+        EXPO_DEBUG: true
       run: |
         npm install -g yarn lerna ultra-runner npm@latest &&
         yarn clean:all && 
         yarn install &&
+        expo diagnostics &&
         yarn bootstrap:production &&
         yarn ci:front:pr
     - name: Create Release Candidate
