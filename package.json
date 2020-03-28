@@ -14,9 +14,6 @@
     "build:back": "ultra -r --filter \"*backend\" build",
     "build:all": "ultra -r build",
     "build": "yarn build:front",
-    "release:ci:front": "ultra -r --pretty --filter \"*frontend\" deploy",
-    "ci:front:push": "ultra -r --pretty --silent --filter \"*frontend\" ci:push",
-    "ci:front:pr": "ultra -r --raw --filter \"*frontend\" ci:pr",
     "monitor": "ultra --monitor",
     "clean:all": "ultra -r --root clean",
     "clean": "lerna clean --yes"
