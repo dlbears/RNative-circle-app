@@ -19,9 +19,9 @@ jobs:
           expo-version: 3.x
           expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
+      - name: Test and Export coverage results
       - run: npm install -g npm@latest yarn lerna ultra-runner && yarn install && yarn bootstrap
       - run: ultra -r test:ci
-      - name: Export test coverage results
       - uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
