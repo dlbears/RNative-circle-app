@@ -3,8 +3,8 @@ name: Integrate frontend changes
 on: 
   push:
     paths:
-      - './src/frontend/main/***'
-      - '!./src/backend/main/***'
+      - 'src/frontend/main/*'
+      - '!src/backend/main/*'
 jobs:
   publish:
     name: Install and Test
