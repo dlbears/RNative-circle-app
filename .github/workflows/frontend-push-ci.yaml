@@ -1,10 +1,6 @@
 name: Integrate frontend changes 
 
-on: 
-  push:
-    paths:
-      - '*'
-      - '!src/backend/*'
+on: [push]
 jobs:
   publish:
     name: Install and Test

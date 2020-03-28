@@ -41,3 +41,4 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./src/frontend/main/native-build/circle-signed.apk
           asset_name: circle-signed.apk
+          asset_content_type: application/octet-stream
